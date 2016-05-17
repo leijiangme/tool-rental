@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Tool Details <a href="javascript:window.history.back();">&lt;- Back</a></h1>
+	<hr />
+	<form action="/tools/tooldetail" method="post" th:object="${tool}">
+	
+	<table>
+		<tr>
+			<td>Tool Number</td>
+			<td><span th:text="${session.tool.toolNumber}"></span></td>
+		</tr>
+		<tr>
+			<td>Abbreviated Description:</td>
+			<td>
+				<span th:text="${session.tool.abbreviatedDescription}"></span> 
+			</td>
+		</tr>
+		<tr>
+			<td>Full Description:</td>
+			<td>
+				<span th:text="${session.tool.fullDescription}"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Rental Price</td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal(session.tool.rentalPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr>
+			<td>Deposit Price</td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal(session.tool.depositPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr>
+			<td>Purchase Price:</td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal(session.tool.purchasePrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+	</table>
+	<h3>Accessories</h3>
+	<table>
+		<tr th:each="acc : ${session.tool.accessories}">
+			<td th:text="${acc}"> </td>
+		</tr>
+	</table>
+	<div th:if="${isClerk}">
+	<h3>Actions</h3>
+	<table>
+		<tr>
+			<td>Mark for sale: <span th:text="${session.tool.listDate != null  ? ('$' + #numbers.formatDecimal(session.tool.salePrice / 100f, 0, 'COMMA', 2, 'POINT')) : 'Not Listed'}"></span>
+		    <div th:if="${session.tool.listDate == null} and ${session.tool.soldDate == null}" >
+  			<input type="submit" value="For Sale" name="forsale" ></input>
+		    </div>
+			</td>
+		</tr>
+		<tr>
+			<td>Sell: <span th:text="${session.tool.soldDate} ? ${session.tool.soldDate} : 'Not sold'"></span>
+		    <div th:if="${session.tool.listDate !=null} and ${session.tool.soldDate == null}" >
+  			<input type="submit" value="Sold" name="sold"></input>
+		    </div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="tools/createserviceorder">Create A service Order for this tool</a> 
+			</td>
+		</tr>
+	</table>
+	</div>
+	</form>
+</body>
+</html>

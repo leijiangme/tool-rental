@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Make Reservation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script th:object="${reservationForm}" type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    var startDt= /*[[${reservationForm.startDt} ? ${#dates.format(reservationForm.startDt,'MM/dd/yyyy')}]]*/;
+    var endDt= /*[[${reservationForm.endDt} ? ${#dates.format(reservationForm.endDt,'MM/dd/yyyy')}]]*/';
+    var selectedCount = /*[[${#lists.size(reservationForm.selectedTools)}]]*/;
+    
+    function warning(e) {
+    	var target = (e || window.event).target,
+    		targetName = target.name,
+    		oldValue = targetName === 'startDt' ? startDt : endDt,
+    		toolType = document.getElementById('toolType');
+    	
+    	if((selectedCount > 0 || toolType.selectedIndex != 0) && oldValue !== target.value ) {
+	    	if(window.confirm("Changing this value will remove all reserved tools.")) {
+	    		var cancel = document.getElementById("cancel");
+	    		cancel.click();
+	    	} else {
+	    		e = e || window.event;
+	    		target.value = oldValue;
+	    	}
+	    }
+    	
+    	return true;
+    }
+	/*]]>*/ 
+    </script>
+</head>
+<body>
+	<h2>Make Reservation</h2>
+	<form th:action="@{/reservations}" th:method="post" th:object="${reservationForm}">
+		<table>
+			<tr>
+				<td>Starting Date:</td>
+				<td>
+					<input type="text" th:field="*{startDt}" onblur="warning()"></input>
+					<span class="error" th:if="${#fields.hasErrors('startDt')}">Please Pick a Start Date</span>
+					<span class="error" th:if="*{badDates}">Start Date must be before or on End Date.</span>
+				</td>
+			</tr>
+			<tr>
+				<td>End Date:</td>
+				<td>
+					<input type="text" th:field="*{endDt}" onblur="warning()"></input>
+					<span class="error" th:if="${#fields.hasErrors('endDt')}">Invalid End Date</span>
+				</td>
+			</tr>
+			<tr	th:each="selectedTool : ${reservationForm.selectedTools}">
+				<td colspan="2" 
+					th:text="${selectedTool.toolNumber} + ' ' +${selectedTool.abbreviatedDescription} + ' $' + ${#numbers.formatDecimal(selectedTool.rentalPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></td>
+			</tr>
+			<tr th:if="${reservationForm.startDt != null}">
+				<th align="left">Type of tool</th>
+				<th align="left">Tool</th>
+			</tr>
+			<tr>
+				<td>
+					<select onchange="this.form.submit()"
+							th:field="*{toolType}">
+						<option value="0">Pick a type</option>
+						<option th:each="type : ${reservationForm.toolTypes}"
+								th:value="${type.code}"
+								th:text="${type.display}"></option>
+					</select>
+				</td>
+				<td>
+					<select th:field="*{selectedTool}">
+						<option value="0">Pick a tool</option>
+						<option th:each="tool : ${reservationForm.tools}"
+								th:value="${tool.toolNumber}"
+								th:text="${tool.toolNumber} + ' ' +${tool.abbreviatedDescription} + ' $' + ${tool.rentalPrice / 100f}"></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" name="state" id="addTool" value="Add a Tool" th:if="${reservationForm.startDt != null} AND ${reservationForm.toolType > 0} AND ${reservationForm.allowedToAddMore}" />
+					<input type="submit" name="state" value="Remove Last Tool" th:if="${reservationForm.startDt != null} AND ${not #lists.isEmpty(reservationForm.selectedTools)}"/>
+					<input type="submit" name="state" value="Calculate Total" th:if="${reservationForm.startDt != null} AND ${not #lists.isEmpty(reservationForm.selectedTools)}" />
+					<input type="submit" name="state" id="cancel" value="Cancel" />
+				</td>
+			</tr>
+		    <div th:if="${reservationForm.lastAddFailed}" style="color:red">
+		    <tr>
+				<td>
+		    	Tool add failed.  Some one else reserved this tool while you were deciding.
+				</td>
+			</tr>
+		    </div>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Rental Receipt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Handyman Tools: Rental Receipt</h1>
+	<table>
+		<tr>
+			<td colspan="2">
+				<h2 th:text="'Your Reservation Number is ' + ${session.reservation.reservationNumber}">Your Reservation Number is</h2>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<h3>Customer Name</h3>
+			<td colspan="2" th:text="${session.reservation.customerFirstName + ' ' + session.reservation.customerLastName}"></td>
+			</td>
+		</tr>
+		<tr>
+			<td>Clerk on Duty
+  			<td colspan="2" th:text="${session.user.name}"></td>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Start Date</strong></td>
+			<td><span th:text="${#dates.format(session.reservation.startDt,'MM/dd/yyyy')}"></span></td>
+		</tr>
+		<tr>
+			<td><strong>End Date</strong></td>
+			<td><span th:text="${#dates.format(session.reservation.endDt,'MM/dd/yyyy')}"></span></td>
+		</tr>
+		<tr>
+			<td>Credit Card Number:
+  			<td colspan="2" th:text="${session.reservation.creditCard}"></td>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Total Rental Price</strong></td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal(session.reservation.rentalPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr>
+			<td><strong>Total Deposit Price</strong></td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal(session.reservation.depositPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr>
+			<td><strong>Balance</strong></td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal((session.reservation.rentalPrice - session.reservation.depositPrice) / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<a href="/clerks">Back to Clerk Menu</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

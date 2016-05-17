@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http//www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Welcome</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2><a th:href="@{/tools}">&lt;- Back</a></h2>
+	<form action="#" th:action="@{/tools/new}" th:object="${toolForm}" method="post"> 
+		<table>
+			<tr>
+				<td colspan="2">Handyman Tools Rental Add new tool form.</td>
+			</tr>
+			<tr>
+				<td>Abbreviated Description</td>
+				<td><input type="text" name="abbreviatedDescription" required="required"></input></td>
+			</tr>
+			<tr>
+				<td>Full Description</td>
+				<td><input type="text" name="fullDescription" required="required"></input></td>
+			</tr>
+			<tr>
+				<td>Rental Price</td>
+				<td><input type="number" step="0.01" name="rentalForHumans" required="required"></input></td>
+			</tr>
+			<tr>
+				<td>Deposit Price</td>
+				<td><input type="number" step="0.01" name="depositForHumans" required="required"></input></td>
+			</tr>
+			<tr>
+				<td>Purchase Price</td>
+				<td><input type="number" step="0.01" name="purchaseForHumans" required="required"></input></td>
+			</tr>
+			<tr>
+				<td>Tool Type</td>
+				<td><input type="number" name="toolType" required="required"></input>1=Hand Tool, 2 = Construction Tool, 3 = Power Tool</td>
+			</tr>
+			<tr>
+				<td>Accessories</td>
+				<td><textarea rows="6" cols="50" name="accessories" ></textarea></td>
+			</tr>
+			<tr>
+				<td><input name="Submit" type="submit"></input></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

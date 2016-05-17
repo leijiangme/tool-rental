@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http//www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Welcome</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form action="#" th:action="@{/customers/new}" th:object="${customerForm}" method="post"> 
+		<table>
+			<tr>
+				<td colspan="2">Handyman Tools Rental requires a valid profile for every user before they can make reservations.</td>
+			</tr>
+			<tr>
+				<td>Email Address (Login)</td>
+				<td><input type="email" th:field="*{username}"></input></td>
+				<td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Invalid Email</td>
+			</tr>
+			<tr>
+				<td>Password (8-50 characters)</td>
+				<td><input type="password" name="password" required="required"></input></td>
+				<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid Password</td>
+			</tr>
+			<tr>
+				<td>Confirm Password</td>
+				<td><input type="password" name="confirm" required="required"></input></td>
+				<td th:if="${#fields.hasErrors('confirm')}" th:errors="*{confirm}">Invalid Password</td>
+			</tr>
+			<tr>
+				<td>First Name</td>
+				<td><input type="text" name="firstName" required="required"></input></td>
+				<td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Invalid First Name</td>
+			</tr>
+			<tr>
+				<td>Last Name</td>
+				<td><input type="text" name="lastName" required="required"></input></td>
+				<td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Invalid Last Name</td>
+			</tr>
+			<tr>
+				<td>Home Phone</td>
+				<td>
+					<input type="text" name="homeAreaCode" required="required" size="3" maxlength="3"></input>
+					<input type="text" name="homeNumber" required="required" size="8" maxlength="8"></input>
+				</td>
+				<td th:if="${#fields.hasErrors('homeAreaCode')}" th:errors="*{homeAreaCode}">Invalid Home Area Code</td>
+				<td th:if="${#fields.hasErrors('homeNumber')}" th:errors="*{homeNumber}">Invalid Home Number</td>
+			</tr>
+			<tr>
+				<td>Work Phone</td>
+				<td><input type="text" name="workAreaCode" required="required" size="3" maxlength="3"></input>
+					<input type="text" name="workNumber" required="required" size="8" maxlength="8"></input>
+				</td>
+				<td th:if="${#fields.hasErrors('workAreaCode')}" th:errors="*{workAreaCode}">Invalid Work Area Code</td>
+				<td th:if="${#fields.hasErrors('workNumber')}" th:errors="*{workNumber}">Invalid Work Number</td>
+			</tr>
+			<tr>
+				<td>Address</td>
+				<td><textarea rows="6" cols="50" name="address" required="required"></textarea></td>
+				<td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Invalid Work Number</td>
+			</tr>
+			<tr>
+				<td><input name="Submit" type="submit"></input></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Handyman Monthly Reports</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div align="center"> 
+	<h2>Monthly Report</h2>
+	<fieldset style="width:500px">
+	<legend>Report</legend>
+	<form th:action="@{/reports}" th:method="post" th:object="${reportForm}">
+		<table>
+			<tr>
+				<td>Start Date:</td>
+				<td><input type="text" th:field="*{startDt}" placeholder="MM/dd/yyyy"></input></td>
+			</tr>
+			<tr>
+				<td>End Date:</td>
+				<td><input type="text" th:field="*{endDt}" placeholder="MM/dd/yyyy"></input></td>
+			</tr>
+			<tr>
+			    <td>Report For:</td>
+				<td>
+					<select name="reportType" th:field="*{reportType}">
+					    <option value="tool">Tools in Inventory</option>
+						<option value="customer">Customers with Rentals</option>
+						<option value="clerk">Clerks on Duty</option>
+					</select>             
+			   </td>
+			</tr>	
+		</table>
+		
+        <input type="submit" value="Submit"></input>
+        <input type="reset" value="Reset"></input>
+	</form>
+	</fieldset>
+	<a href="/clerks">Back</a>
+	
+</div>
+</body>
+</html>

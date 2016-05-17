@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2>Profile <a href="javascript:window.history.back();">&lt;- Back</a></h2>
+	<hr />
+	<table>
+		<tr>
+			<td>Email Address:</td>
+			<td><span th:text="${session.user.username}"></span></td>
+		</tr>
+		<tr>
+			<td>Name:</td>
+			<td>
+				<span th:text="${session.user.firstName}"></span> 
+				<span th:text="${session.user.lastName}"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Home Phone:</td>
+			<td><span th:text="${session.user.homePhone}"></span></td>
+		</tr>
+		<tr>
+			<td>Work Phone:</td>
+			<td><span th:text="${session.user.workPhone}"></span></td>
+		</tr>
+		<tr>
+			<td>Address:</td>
+			<td><span th:text="${session.user.address}"></span></td>
+		</tr>
+	</table>
+	<hr />
+	<h2>Reservation History</h2>
+	<table border="1">
+		<tr>
+			<th>Reservation #</th>
+			<th>Start</th>
+			<th>End</th>
+			<th>Rental Price</th>
+			<th>Deposit</th>
+			<th>Pick-up Clerk</th>
+			<th>Drop off Clerk</th>
+		</tr>
+		<tr th:each="reservation : ${reservations}">
+			<td th:text="${reservation.reservationNumber}"> </td>
+			<td th:text="${#dates.format(reservation.startDt, 'MM/dd/yyyy')}"></td>
+			<td th:text="${#dates.format(reservation.endDt, 'MM/dd/yyyy')}"> </td>
+			<td th:text="'$' + ${#numbers.formatDecimal(reservation.rentalPrice / 100f, 0, 'COMMA', 2, 'POINT')}"> </td>
+			<td th:text="'$' + ${#numbers.formatDecimal(reservation.depositPrice / 100f, 0, 'COMMA', 2, 'POINT')}"> </td>
+			<td th:text="${reservation.pickupClerk}"> </td>
+			<td th:text="${reservation.dropoffClerk}"> </td>
+		</tr>
+	</table>
+</body>
+</html>

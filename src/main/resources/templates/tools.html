@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Tool Maintenance</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h3><a th:href="@{/clerks}">&lt;- Back</a></h3>
+    <form action="/tools" method="post">
+    <table>
+    	<tr>
+    		<td width="40%">
+    		Tool Details:  Enter tool number
+    			<input type="number" name="toolNumber" required="required"></input>
+    			<input type="submit" value="Search"></input>
+		    <div th:if="${error}" style="color:red">
+		    	The tool number you entered was not found
+		    </div>
+    			
+    		</td>
+    	</tr>
+    	<tr>
+    		<td width="40%">
+    		<h3>Add tool <a href="/tools/new">Add a new tool</a></h3>
+    		</td>
+    	</tr>
+    </table>
+    </form>
+</body>
+</html>

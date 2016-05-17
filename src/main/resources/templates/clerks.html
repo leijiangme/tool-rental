@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handy Clerks</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div align="center"> 
+    <h1 style="text-align: center">Welcome Associate <span th:text="${session.user.name}"></span></h1>
+	<fieldset style="width:500px">
+	<legend>Clerk-on-Duty</legend>
+    	<form action="/clerks" method="post">
+			<div>
+				<label for="check_out">Reservation Check Out</label>
+				<input type="number" name="reservationNumber"></input>
+				<input type="submit" name="check_out" value="Tool Check Out" ></input>
+				<div style="color:red" th:if="${param.err != null} AND ${param.err[0] == 'noPickupReservation'}">
+					Please specify a reservation
+				</div>
+			</div>
+			
+			<div>
+				<label for="check_in">Reservation Check In</label>
+				<input type="number" name="reservationNumber2"></input>
+				<input type="submit" name="check_in" value="Tool Check In"></input>
+				<div style="color:red" th:if="${param.err != null} AND ${param.err[0] == 'noDropoffReservation'}">
+					Please specify a reservation
+				</div>
+			</div>
+		</form>
+		
+    	<div>
+		    <form method="get" action="/tools">
+			<button type="submit">Tool Maintenance</button>
+			</form>
+    	</div>
+		
+    	<div>
+			<form method="get" action="/reports">
+			<button type="submit">Monthly Report</button>
+			</form>
+    	</div>
+    <a href="/">Log Out</a>
+	</fieldset>
+</div>
+</body>
+</html>

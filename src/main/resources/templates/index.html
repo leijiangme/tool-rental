@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Welcome</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/site.css"></link>
+</head>
+<body>
+<div align="center">
+    <h1 style="text-align: center">Welcome to Handyman Portal</h1>
+	<fieldset style="width:500px">
+	<legend>Please Log In</legend>
+    <div th:if="${error}" style="color:red">
+    	Could not authenticate you. Please try again.
+    </div>
+    <div>
+    	<form action="/" method="post"  th:object="${loginForm}">
+    	<div>
+    		<label for="username">Username:</label>
+    		<input type="text" th:field="*{username}" min="7" max="50"></input>
+    		<div th:if="${#fields.hasErrors('username')}">
+    			<span class="error">Please enter a username</span>
+			</div>
+    	</div>
+    	<div>
+    		<label for="password">Password:</label>
+    		<input type="password" th:field="*{password}" min="7" max="50"></input>
+    		<div th:if="${#fields.hasErrors('password')}">
+    			<span class="error">Please enter a password</span>
+			</div>
+    	</div>
+    	<div>
+    		<input type="radio" th:field="*{type}" th:value="customer" /> Customer
+    		<input type="radio" th:field="*{type}" th:value="clerk" /> Clerk
+    		<div th:if="${#fields.hasErrors('type')}">
+    			<span class="error">Please pick an account type</span>
+			</div>
+    	</div>
+    	<div>
+    		<input type="submit" value="Login"></input>
+    	</div>
+    	<div>
+    		<h3>New User? <a href="/customers/new">Create a new account here!</a></h3>
+    	</div>
+    	</form>
+    </div>
+    </fieldset>
+</div>
+</body>
+</html>

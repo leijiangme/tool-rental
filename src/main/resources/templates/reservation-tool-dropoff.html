@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Reservation Tool Dropoff</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form action="/clerks/reservation-tool-dropoff" method="post">
+	<h2 th:text="'Your Reservation Number is: ' + ${session.reservation.reservationNumber}"></h2>
+	<h3>Tools Rented</h3>
+	<table border="1">
+		<thead>
+		<tr>
+		<td>Tool Number/Description</td><td>Accessories</td>
+		</tr>
+		</thead>
+		<div th:each="selectedTool : ${session.reservation.tools}">
+		<tr>
+			<td th:text="${selectedTool.toolNumber + ': ' + selectedTool.abbreviatedDescription}"> </td>
+			<td>
+				<br th:each="acc : ${selectedTool.accessories}" th:text="${acc}"></br>
+			</td>
+		</tr>
+		</div>
+	</table>
+	<h3>Reservation Details</h3>
+	<table>
+		<tr>
+			<td>Start Date</td>
+			<td><span th:text="${#dates.format(session.reservation.startDt,'MM/dd/yyyy')}"></span></td>
+		</tr>
+		<tr>
+			<td>End Date</td>
+			<td><span th:text="${#dates.format(session.reservation.endDt,'MM/dd/yyyy')}"></span></td>
+		</tr>
+		<tr>
+			<td>Total Rental Price</td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal(session.reservation.rentalPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr>
+			<td>Total Deposit Price</td>
+			<td><span th:text="'$' + ${#numbers.formatDecimal(session.reservation.depositPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr>
+			<td>Pickup Clerk:</td>
+  			<td colspan="2" th:text="${session.reservation.pickupClerk}"></td>
+		</tr>
+		<tr>
+			<td>Credit Card Number:</td>
+  			<td colspan="2" th:text="${session.reservation.creditCard}"></td>
+		</tr>
+		<tr>
+			<td>Expiration Date (MMYY):</td>
+  			<td colspan="2" th:text="${session.reservation.expirationDate}"></td>
+		</tr>
+		<tr>
+			<td>Complete:
+  			<input type="submit" value="Complete Dropoff" name="complete_dropoff"></input>
+  			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<a href="/clerks">Back to Clerk Menu</a>
+			</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

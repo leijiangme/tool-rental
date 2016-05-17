@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Handyman Monthly Reports: Rental Customer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/site.css"></link>
+</head>
+<body>
+<div align="center"> 
+	<h2>Monthly Report for Rental Customer</h2>
+	<p th:text="${reportForm.startDt} + ' - ' + ${reportForm.endDt}" />
+	<table border="1">
+	    <tr th:if="${not #lists.isEmpty(available)}">
+			<td colspan="4">
+				<form th:action="@{/tools}" action="#" method="post">
+				<script language = "JavaScript">
+					var now = new Date();
+					var dayNames = new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+					var monNames = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+					document.write(("Report created on: " + dayNames[now.getDay()] + " " + monNames[now.getMonth()] + " " + now.getDate() + ", " + now.getFullYear()).fixed().fontcolor("blue"));
+				</script>	
+				</form>
+			</td>
+		</tr>
+		<tr style="background-color:#ADD8E6;color:#000000;">
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email Address</th>
+			<th>Number of Rentals</th>
+		</tr>
+		<tr th:each="report : ${reports}">
+			<td th:text="${report.reportCustomerFirstName}"></td>
+			<td th:text="${report.reportCustomerLastName}"></td>
+			<td th:text="${report.reportCustomerEmail}"></td>
+			<td th:text="${report.reportCustomerRentalNum}"></td>
+		</tr>
+		
+	</table>
+	<a href="/reports">Back</a>
+</div>
+</body>
+</html>

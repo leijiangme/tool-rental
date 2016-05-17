@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Handyman Tools: Tool Availability</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/site.css"></link>
+</head>
+<body>
+	<h2>Tool Availability <a th:href="@{/tools/availablity-search}"> &lt;- Back</a></h2>
+	<p th:if="${param.error != null}" style="color:red">
+    	The tool number you entered was not found
+    </p>
+	<table border="1">
+		<tr>
+			<th>Tool ID</th>
+			<th>Abbr. Description</th>
+			<th>Deposit ($)</th>
+			<th>Price/Day ($)</th>
+		</tr>
+		<tr th:each="tool : ${available}">
+			<td><span th:text="${tool.toolNumber}"></span></td>
+			<td><span th:text="${tool.abbreviatedDescription}"></span></td>
+			<td align="center"><span th:text="'$' + ${#numbers.formatDecimal(tool.depositPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+			<td align="center"><span th:text="'$' + ${#numbers.formatDecimal(tool.rentalPrice / 100f, 0, 'COMMA', 2, 'POINT')}"></span></td>
+		</tr>
+		<tr th:if="${not #lists.isEmpty(available)}">
+			<td colspan="4">
+				<form th:action="@{/tools}" action="#" method="post">
+					Tool ID (from above): <input type="number" min="1" name="toolNumber"></input> 
+					<input type="submit" value="View Details"></input>
+					<input type="hidden" name="lastQuery" th:value="${lastQuery}" />
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

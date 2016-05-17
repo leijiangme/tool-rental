@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handyman tools - Service order</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Tool Details and Service Order Creation <a href="/tools">&lt;- Back</a></h1>
+	<hr />
+	<form action="/tools/createserviceorder" method="post" th:object="${tool}">
+	
+	<table>
+		<tr>
+			<td>Tool Number</td>
+			<td><span th:text="${session.tool.toolNumber}"></span></td>
+		</tr>
+		<tr>
+			<td>Abbreviated Description:</td>
+			<td>
+				<span th:text="${session.tool.abbreviatedDescription}"></span> 
+			</td>
+		</tr>
+		<tr>
+			<td>Full Description:</td>
+			<td>
+				<span th:text="${session.tool.fullDescription}"></span>
+			</td>
+		</tr>
+		<tr>
+			<td>Start date of service:
+  			<input type="text" name="startdate" ></input>
+			</td>
+		</tr>
+		<tr>
+			<td>End date of service:
+  			<input type="text" name="enddate" ></input>
+			</td>
+		</tr>
+		<tr>
+			<td>Estimated Repair Cost:
+  			<input type="number" step="0.01" name="estrepaircost" ></input>
+			</td>
+		</tr>
+		<tr>
+			<td>Create A service Order for this tool:
+  			<input type="submit" value="createserviceorder" name="createserviceorder"></input>
+		    <div th:if="${createsoerror}" style="color:red">
+		    	Service order failed because the tool is reserved.
+		    </div>
+  			</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

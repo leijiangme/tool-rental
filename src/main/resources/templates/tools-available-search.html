@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Handyman Tools: Tool Availability</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/site.css"></link>
+</head>
+<body>
+	<h2>Select Tool Category <a th:href="@{/customers}"> &lt;- Back</a></h2>
+	<hr />
+	<form th:action="@{/tools/availablity-search-results}" th:object="${availabilitySearchForm}" method="get">
+		<div>
+			<div th:each="ty : ${availabilitySearchForm.toolTypes}">
+				<input type="radio" th:field="*{toolType}" th:value="${ty.code}"></input>
+				<label th:for="${#ids.prev('toolType')}" th:text="${ty.display}"></label>
+			</div>
+			
+			<span th:if="${#fields.hasErrors('toolType')}" class="error">Please pick a tool type.</span>
+		</div>
+		<div>
+			<label for="startDt">Start Date:</label>
+			<input type="text" th:field="${availabilitySearchForm.startDt}"></input>
+			<span th:if="${#fields.hasErrors('startDt')}" th:errors="*{startDt}">Incorrect date</span>
+		</div>
+		<div>
+			<label for="endDt">End Date:</label>
+			<input type="text" th:field="${availabilitySearchForm.endDt}"></input>
+			
+			<span th:if="${#fields.hasErrors('endDt')}" class="error">Please specify an end date.</span>
+		</div>
+		<div>
+			<input type="submit" value="Submit"></input>
+		</div>
+	</form>
+</body>
+</html>

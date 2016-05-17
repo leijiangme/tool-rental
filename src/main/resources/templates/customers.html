@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handyman Tools: Customer Portal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p>
+    	Welcome, <span th:text="${session.user.firstName}"></span>!
+    </p>
+    <p th:if="${param.system_error} AND ${param.system_error[0]} == 101">
+    	<strong style="color:red">
+    	We're sorry, but you took to long to order. Please try again while taking less than 10 minutes per tool selection.</strong>
+    </p>
+    <table>
+    	<tr>
+    		<td width="40%">
+    			<h3><a th:href="@{/customers/profile(username=${session.user.username})}">View Profile</a></h3>
+    		</td>
+    		<td width="40%">
+    			<h3><a th:href="@{/tools/availablity-search}">Check Tool Availability</a></h3>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td width="40%">
+    			<h3><a th:href="@{/reservations}">Make Reservation</a></h3>
+    		</td>
+    		<td width="40%">
+    			<a th:href="@{/}">Exit</a>
+    		</td>
+    	</tr>
+    </table>
+</body>
+</html>
